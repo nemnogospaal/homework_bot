@@ -111,6 +111,8 @@ def main():
 
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     timestamp = int(time.time())
+    current_report = {}
+    prev_report = {}
 
     while True:
         try:
@@ -120,7 +122,13 @@ def main():
             if homework_list:
                 homework = homework_list[0]
                 message = parse_status(homework)
-                send_message(bot, message)
+                current_report[response.get(
+                    'homework_name')] = response.get('status')
+                if current_report != prev_report:
+                    send_message(bot, message)
+                    prev_report = current_report.copy()
+                    current_report[response.get(
+                        'homework_name')] = response.get('status')
 
         except Exception as error:
             message = f'Сбой в работе программы: {error}'
