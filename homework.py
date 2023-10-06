@@ -3,7 +3,7 @@ import os
 import sys
 import time
 from http import HTTPStatus
-from typing import Dict, List, Any
+from typing import Dict, List, Type
 
 import requests
 import telegram
@@ -46,7 +46,7 @@ def check_tokens():
                TELEGRAM_CHAT_ID])
 
 
-def send_message(bot: Any, message: str):
+def send_message(bot: Type[telegram.bot.Bot], message: str):
     """Отправить сообщение в Telegram."""
     try:
         bot.send_message(TELEGRAM_CHAT_ID,
@@ -58,14 +58,10 @@ def send_message(bot: Any, message: str):
 
 def get_api_answer(timestamp: int) -> Dict:
     """Получить ответ от API."""
-    timestamp = int(time.time())
-    url = ENDPOINT
-    headers = HEADERS
-    payload = {'from_date': timestamp}
     try:
-        homework_statuses = requests.get(url=url,
-                                         headers=headers,
-                                         params=payload)
+        homework_statuses = requests.get(url=ENDPOINT,
+                                         headers=HEADERS,
+                                         params={'from_date': timestamp})
     except requests.RequestException:
         logging.error('Ошибка запроса')
 
