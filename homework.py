@@ -3,6 +3,7 @@ import os
 import sys
 import time
 from http import HTTPStatus
+from typing import Dict, List, Any
 
 import requests
 import telegram
@@ -45,17 +46,17 @@ def check_tokens():
                TELEGRAM_CHAT_ID])
 
 
-def send_message(bot, message):
+def send_message(bot: Any, message: str):
     """Отправить сообщение в Telegram."""
     try:
         bot.send_message(TELEGRAM_CHAT_ID,
                          message)
         logging.debug('Сообщение успешно отправлено')
-    except Exception as error:
+    except telegram.error.TelegramError as error:
         logging.error(f'Сбой при отправке сообщения {error}')
 
 
-def get_api_answer(timestamp):
+def get_api_answer(timestamp: int) -> Dict:
     """Получить ответ от API."""
     timestamp = int(time.time())
     url = ENDPOINT
@@ -65,17 +66,16 @@ def get_api_answer(timestamp):
         homework_statuses = requests.get(url=url,
                                          headers=headers,
                                          params=payload)
-        if homework_statuses.status_code != HTTPStatus.OK:
-            logging.error('Недоступность ENDPOINT')
-            raise exceptions.HTTPStatusError(
-                'Не удалось получить ответ от API')
-        return homework_statuses.json()
-    except Exception:
-        logging.error('Недоступность ENDPOINT')
-        raise exceptions.HTTPStatusError('Недоступность ENDPOINT')
+    except requests.RequestException:
+        logging.error('Ошибка запроса')
+
+    if homework_statuses.status_code != HTTPStatus.OK:
+        logging.error('ENDPOINT недоступен')
+        raise exceptions.HTTPStatusError('ENDPOINT недоступен')
+    return homework_statuses.json()
 
 
-def check_response(response):
+def check_response(response: dict) -> List:
     """Проверить корректность ответа."""
     logging.debug('Начата проверка ответа API')
     if not isinstance(response, dict):
@@ -85,10 +85,11 @@ def check_response(response):
     homework = response.get('homeworks')
     if not isinstance(homework, list):
         raise TypeError('ответ получен не в виде list')
+    type(homework)
     return homework
 
 
-def parse_status(homework):
+def parse_status(homework: dict) -> str:
     """Парсить статус проверки работы."""
     if 'homework_name' not in homework:
         raise TypeError('отсутсвует ключ homework_name')
