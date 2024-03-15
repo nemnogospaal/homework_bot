@@ -10,20 +10,20 @@ API сервиса Практикум.Домашка позволяет отсл
 
 `cd homework_bot`  перейти в директорию
 
-`python -m venv env` -> создать виртуальное окружение\
+`python -m venv env`  создать виртуальное окружение\
 
-`source venv/Scripts/activate` -> активировать виртуальное окружение\
+`source venv/Scripts/activate`  активировать виртуальное окружение\
 
-`python -m pip install --upgrade pip` -> обновить окружение\
+`python -m pip install --upgrade pip`  обновить окружение\
 
-`pip install -r requirements.txt` -> установить зависимости из файла requirements.txt\
+`pip install -r requirements.txt`  установить зависимости из файла requirements.txt\
 
-`python homework.py` -> запуск бота\
+`python homework.py`  запуск бота\
 
 ### Как тестировать проект:
-`source venv/Scripts/activate` -> активировать виртуальное окружение\
+`source venv/Scripts/activate`  активировать виртуальное окружение\
 
-`pytest` -> Выполнить команду из корня проекта
+`pytest`  Выполнить команду из корня проекта
 
 ### Cписок используемых технологий:
 - pytest
