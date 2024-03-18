@@ -31,8 +31,8 @@ API сервиса Практикум.Домашка позволяет отсл
 - python-telegram-bot
 
 ### Как заполнить файл .env:
-В проекте есть файл .env.example заполните свой по аналогии.
+В проекте есть файл .env.example, заполните свой по аналогии.
 
-`PRACTICUM_TOKEN` - токен для доступа к эндпоинту https://practicum.yandex.ru/api/user_api/homework_statuses/(API Практикум.Домашка)\
+`PRACTICUM_TOKEN` - токен для доступа к эндпоинту ```https://practicum.yandex.ru/api/user_api/homework_statuses/(API Практикум.Домашка)```\
 `TELEGRAM_TOKEN` - токен для работы с Bot API\
 `TELEGRAM_CHAT_ID` - это ID того чата, в который бот должен отправить сообщение\
